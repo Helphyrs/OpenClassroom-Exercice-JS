@@ -6,6 +6,8 @@
 	<title>Les Bonnes Pièces</title>
 	<link rel="stylesheet" href="styles.css">
 	<script type="module" src="pieces.js"></script>
+	<script src="node_modules/chart.js/dist/chart.umd.js" defer></script>
+
 </head>
 
 <body>
@@ -40,6 +42,14 @@
 				<input type="number" name="etoile" min="0" max="5">
 				<button>Envoyer</button>
 			</form>
+			<h3>Données</h3>
+			<button class="btn-maj">Mettre à jour les pièces</button>
+			<div>
+				<canvas id="graphique-avis" width="300" height="300"></canvas>
+			</div>
+			<div>
+				<canvas id="graphique-pieces-avis" width="300" height="300"></canvas>
+			</div>
 		</section>
 
 		<!-- Fiches produits -->

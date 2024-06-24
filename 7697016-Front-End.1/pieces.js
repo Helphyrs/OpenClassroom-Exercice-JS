@@ -1,7 +1,18 @@
-const pieces = await fetch("http://localhost:8081/pieces").then(pieces => pieces.json());
-import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from "./avis.js";
+import { ajoutListenersAvis, ajoutListenerEnvoyerAvis, afficherGraphiqueAvis, afficherGraphiquePieces } from "./avis.js";
 
 const sectionFiches = document.querySelector(".fiches");
+
+let pieces = window.localStorage.getItem("pieces");
+
+if (pieces === null) {
+    const piece = await fetch("http://localhost:8081/pieces").then(pieces => pieces.json());
+    const valeurPieces = JSON.stringify(piece);
+    pieces = piece;
+    window.localStorage.setItem("pieces", valeurPieces);
+} else {
+    pieces = JSON.parse(pieces)
+}
+
 ajoutListenerEnvoyerAvis();
 
 document.getElementById('filtrePrix').addEventListener('input', function () {
@@ -79,7 +90,10 @@ boutonFilter.addEventListener("click", function () {
     genererPieces(piecesFiltres);
 });
 
-
+const boutonMettreAJour = document.querySelector(".btn-maj");
+boutonMettreAJour.addEventListener("click", function () {
+    window.localStorage.removeItem("pieces");
+});
 
 const abordablesElements = document.createElement('ul');
 for (let i = 0; i < pieceAbordable.length; i++) {
@@ -99,3 +113,6 @@ for (let i = 0; i < pieceDisponible.length; i++) {
 }
 document.querySelector('.disponibles')
     .appendChild(disponiblesElements)
+
+await afficherGraphiqueAvis()
+await afficherGraphiquePieces()
